@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Controle de Gastos</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; manifest-src 'self'">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <button id="m-ant" aria-label="Mês anterior">‹</button>
+    <h2 id="m-nome"></h2>
+    <button id="m-prox" aria-label="Próximo mês">›</button>
+  </header>
+
+  <section id="v-resumo">
+    <div class="cards">
+      <div class="card"><small>Receitas</small><b id="r-rec" class="rec"></b></div>
+      <div class="card"><small>Gastos</small><b id="r-gas" class="gasto"></b></div>
+      <div class="card"><small>Saldo</small><b id="r-sal"></b></div>
+    </div>
+    <h3>Gastos por categoria</h3>
+    <div id="donut" role="img" aria-label="Gráfico de gastos por categoria"></div>
+    <ul id="cats"></ul>
+    <p id="cats-vazio" class="mut" hidden>Nenhum gasto neste mês.</p>
+    <h3>Backup dos dados</h3>
+    <p class="mut">Seus dados ficam somente neste aparelho. Exporte um arquivo de backup de vez em quando.</p>
+    <div class="acoes">
+      <button id="bk-exportar" type="button">Exportar</button>
+      <label class="botao">Importar<input id="bk-importar" type="file" accept="application/json,.json" hidden></label>
+    </div>
+    <p id="bk-msg" class="mut" role="status"></p>
+  </section>
+
+  <section id="v-lista" hidden>
+    <ul id="lista"></ul>
+    <p id="lista-vazia" class="mut" hidden>Nenhum lançamento neste mês.</p>
+  </section>
+
+  <section id="v-novo" hidden>
+    <h3 id="f-titulo">Novo lançamento</h3>
+    <form id="form-lanc">
+      <div class="seg">
+        <label><input type="radio" name="tipo" value="gasto" checked><span>Gasto</span></label>
+        <label><input type="radio" name="tipo" value="receita"><span>Receita</span></label>
+      </div>
+      <input id="f-valor" inputmode="decimal" placeholder="Valor (ex.: 25,90)" required>
+      <input id="f-data" type="date" required>
+      <select id="f-cat" required></select>
+      <input id="f-desc" placeholder="Descrição (opcional)" maxlength="100">
+      <button class="primario">Salvar</button>
+      <button type="button" id="f-excluir" class="perigo" hidden>Excluir</button>
+      <p id="f-erro" class="erro" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="v-metas" hidden>
+    <h3>Metas mensais de gastos</h3>
+    <ul id="metas"></ul>
+    <p id="metas-vazia" class="mut" hidden>Você ainda não definiu metas. Defina um limite mensal abaixo.</p>
+    <h3>Definir meta</h3>
+    <form id="form-meta">
+      <select id="meta-cat"></select>
+      <input id="meta-valor" inputmode="decimal" placeholder="Limite mensal (ex.: 500,00)" required>
+      <button class="primario">Salvar meta</button>
+      <button type="button" id="meta-excluir" class="perigo" hidden>Excluir meta</button>
+      <p id="meta-erro" class="erro" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="v-invest" hidden>
+    <h3>Meus objetivos</h3>
+    <ul id="invest"></ul>
+    <p id="invest-vazio" class="mut" hidden>Nenhum objetivo ainda. Cadastre abaixo algo que você quer conquistar, como um fone ou uma viagem.</p>
+    <form id="form-aporte" hidden>
+      <b id="ap-nome"></b>
+      <input id="ap-valor" inputmode="decimal" placeholder="Valor do aporte (ex.: 150,00)" required>
+      <button class="primario">Confirmar aporte</button>
+      <button type="button" id="ap-cancelar" class="link">Cancelar</button>
+      <p id="ap-erro" class="erro" role="alert"></p>
+    </form>
+    <h3 id="inv-titulo">Novo objetivo</h3>
+    <form id="form-inv">
+      <input id="inv-nome" placeholder="O que você quer? (ex.: Fone)" maxlength="60" required>
+      <input id="inv-alvo" inputmode="decimal" placeholder="Valor do objetivo (ex.: 800,00)" required>
+      <input id="inv-atual" inputmode="decimal" placeholder="Já investido (opcional)">
+      <small class="mut">Até quando?</small>
+      <input id="inv-prazo" type="date" required>
+      <button class="primario">Salvar objetivo</button>
+      <button type="button" id="inv-excluir" class="perigo" hidden>Excluir objetivo</button>
+      <button type="button" id="inv-limpar" class="link" hidden>Cancelar edição</button>
+      <p id="inv-erro" class="erro" role="alert"></p>
+    </form>
+  </section>
+
+  <nav>
+    <button data-v="resumo" class="ativo">Resumo</button>
+    <button data-v="lista">Extrato</button>
+    <button data-v="metas">Metas</button>
+    <button data-v="invest">Investir</button>
+    <button data-v="novo">+ Novo</button>
+  </nav>
+</div>
+<script src="dados.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
